@@ -43,7 +43,10 @@ def get_contract(contract_name):
         brownie.network.contract.ProjectContract: The most recently deployed version of the contract.
     """
     contract_type = contract_to_mock.get(contract_name)
-    if network.show_active() in LOCAL_BLOCKCHAIN_NETWORK:
+    if (
+        network.show_active() in LOCAL_BLOCKCHAIN_NETWORK
+        or network.show_active() == "mainnet-fork"
+    ):
         if len(contract_type) <= 0:
             deploy_mocks()
         contract = contract_type[-1]
